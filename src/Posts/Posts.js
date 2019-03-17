@@ -6,21 +6,24 @@ import gql from 'graphql-tag';
 export class Posts extends Component {
   render() {
     return (
-      <ul>
-        <Query query={POSTS_QUERY}>
-          {({ loading, data }) => {
-            if (loading) return 'Loading...';
-            const { posts } = data;
-            return posts.map(post => (
-              <li key={post.id}>
-                <Link to={`/post/${post.id}`}>
-                  <h3>{post.title}</h3>
-                </Link>
-              </li>
-            ));
-          }}
-        </Query>
-      </ul>
+      <div>
+        <Link to={'/post/new'} className="button">
+          New Post
+        </Link>
+        <ul className="posts-list">
+          <Query query={POSTS_QUERY}>
+            {({ loading, data }) => {
+              if (loading) return 'Loading...';
+              const { posts } = data;
+              return posts.map(post => (
+                <li key={post.id}>
+                  <Link to={`/post/${post.id}`}>{post.title}</Link>
+                </li>
+              ));
+            }}
+          </Query>
+        </ul>
+      </div>
     );
   }
 }
