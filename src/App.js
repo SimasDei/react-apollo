@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
-import { ApolloProvider, Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { ApolloProvider } from 'react-apollo';
 
 import logo from './logo.svg';
 import './App.css';
+import Post from './Posts/Post';
+import Posts from './Posts/Posts';
 
 const client = new ApolloClient({
   uri: 'https://api-euwest.graphcms.com/v1/cjtclucvu6cui01dnn66iwu4y/master'
 });
-
-const POSTS_QUERY = gql`
-  query allPosts {
-    posts {
-      id
-      title
-      body
-    }
-  }
-`;
 
 // client
 //   .query({
@@ -36,18 +27,10 @@ class App extends Component {
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
               <Switch>
-                <Route>
-                  <Query query={POSTS_QUERY}>
-                    {({ loading, data }) => {
-                      if (loading) return 'Loading...';
-                      const { posts } = data;
-                      return posts.map(post => (
-                        <h1 key={post.id}>{post.title}</h1>
-                      ));
-                    }}
-                  </Query>
-                </Route>
+                <Route path="/post/:id" component={Post} />
+                <Route path="/posts" component={Posts} />
               </Switch>
+
               <a
                 className="App-link"
                 href="https://reactjs.org"
