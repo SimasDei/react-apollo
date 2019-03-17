@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
@@ -7,6 +7,7 @@ import logo from './logo.svg';
 import './App.css';
 import Post from './Posts/Post';
 import Posts from './Posts/Posts';
+import NewPost from './Posts/NewPost';
 
 const client = new ApolloClient({
   uri: 'https://api-euwest.graphcms.com/v1/cjtclucvu6cui01dnn66iwu4y/master'
@@ -26,19 +27,15 @@ class App extends Component {
           <div className="App">
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
+              <Link to={'/'}>
+                <h4>Home</h4>
+              </Link>
+              <Link to={'/post/new'}>New Post</Link>
               <Switch>
+                <Route exact path="/" component={Posts} />
+                <Route exact path="/post/new" component={NewPost} />
                 <Route path="/post/:id" component={Post} />
-                <Route path="/posts" component={Posts} />
               </Switch>
-
-              <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Learn React
-              </a>
             </header>
           </div>
         </Router>
