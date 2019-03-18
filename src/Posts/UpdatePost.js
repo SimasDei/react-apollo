@@ -8,7 +8,13 @@ export class UpdatePost extends Component {
     const { post } = this.props;
     return (
       <Mutation mutation={UPDATE_POST}>
-        {updatePost => <PostForm onSubmit={updatePost} post={post} />}
+        {(updatePost, result) => {
+          const onSuccess = () =>
+            result.client.writeData({ data: { isEditMode: false } });
+          return (
+            <PostForm onSuccess={onSuccess} onSubmit={updatePost} post={post} />
+          );
+        }}
       </Mutation>
     );
   }
